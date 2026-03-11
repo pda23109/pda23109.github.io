@@ -42,3 +42,14 @@ for (var i = 0; i < 500; i++) {
   scene1.appendChild(tree);
 }
     </script>
+  AFRAME. rogisterComponet ('sounding', {
+  tick: function () {
+  if (Math.random() < 0.99) return; 
+    var sound = this.el.componets.sound;
+    if (sound) sound. playSound () ;
+    }
+    })
+  </script>
+    
+  
+  
