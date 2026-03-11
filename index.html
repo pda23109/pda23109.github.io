@@ -28,7 +28,7 @@
 </a-scene>
   <script>
   var scene1 = document.getElementById('s1');
-for var (i = 0; i < 500; i++) {
+for (var i = 0; i < 500; i++) {
   var tree = document.createElement('a-entity');
   var x = Math.random() * 800 - 400;
   var y = Math.random() * 800 - 400;
@@ -41,7 +41,7 @@ for var (i = 0; i < 500; i++) {
   tree.setAttribute('shadow', 'receive: false');
   scene1.appendChild(tree);
 }
-  for var (i= 0; i < 10; i++) {
+  for (var i= 0; i < 10; i++) {
   var bee = document.createElement('a-entity');
   var x = Math.random() * 10 - 5;
   var y = Math.random() * 3 + 3;
