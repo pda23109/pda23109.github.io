@@ -31,8 +31,8 @@
 for (var i = 0; i < 500; i++) {
   var tree = document.createElement('a-entity');
   var x = Math.random() * 800 - 400;
-  var z = Math.random() * 800 - 400;
-  var s = Math.random() * 15 + 5;
+  var y = Math.random() * 800 - 400;
+  var z = Math.random() * 15 + 5;
   var r = Math.random() * 180 - 90;
   tree.setAttribute('gltf-model', '#tree');
   tree.setAttribute('position', x + ' 0 ' + z);
@@ -40,6 +40,20 @@ for (var i = 0; i < 500; i++) {
   tree.setAttribute('rotation', '0 ' + r + ' 0');
   tree.setAttribute('shadow', 'receive: false');
   scene1.appendChild(tree);
+  
+  for(var i= 0; i < 10; i++) 
+  {var bee = document.createElement('a-entity');
+  var x = Math.random() * 10 - 5;
+  var y = Math.random() * 3 + 3;
+  var z = Math.random() * 10 - 5;
+  var r = Math.random() * 180 - 90;
+  bee.setAttribute('gltf-model', '#bee');
+  bee.setAttribute('position', x + ' '+ y ' ' + z);
+  bee.setAttribute('scale', '0.01 0.01 0.01');
+  bee.setAttribute('rotation', '0 ' + r + ' 0');
+  bee.setAttribute('sound', 'scr:#bzzz; volume: 0.1; poolsize: 10');
+  bee.setAttribute('sounding', '');
+  scene1.appendChild(bee);
 }
     </script>
   AFRAME. rogisterComponet ('sounding', {
