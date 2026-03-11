@@ -56,13 +56,14 @@ for var (i = 0; i < 500; i++) {
   scene1.appendChild(bee);
 }
     </script>
-  AFRAME. rogisterComponet ('sounding', {
+  <script>
+  AFRAME.registerComponent('sounding', {
   tick: function () {
   if (Math.random() < 0.99) return; 
-    var sound = this.el.componets.sound;
-    if (sound) sound. playSound () ;
+    var sound = this.el.components.sound;
+    if (sound) sound.playSound();
     }
-    })
+    });
   </script>
     <a-entity glft-model= "#bird" scale="5 5 5" shadow="receive: false" position= "-50 25 -50"
       sound="scr:#hawk; poolSize: 2" sounding></a-entity>
