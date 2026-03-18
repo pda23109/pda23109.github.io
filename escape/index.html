@@ -28,7 +28,26 @@ sound= "scr: url(mixkit-glass-break-with-hammer-thud759-wav)">
     </a-camera>
 </a-scene>
 </body>
-  
+  <script>
+var locked = true, tool = false, gas = true, message = "",time = 5000
+  AFRAME.registerComponent('updating', {
+    tick: function () {
+      if (gas) time--;
+      if (time < 0) message = "Game over...";
+      if (message != "") this.el.setAttribute('value', message);
+      else this.el.setAttribute('value',''+ Math.round(time / 100));
+
+      var pos= document.getElementyById('cam').getAttribute('position');
+      if (pos.x < -19) pos.x = -19;
+       if (pos.x > 19) pos.x = 19;
+       if (pos.z < -19) pos.z = -19;
+       if (pos.z > 19) pos.z = 19;
+      document.getElementyById('cam').setAttribute('position', pos);
+    }
+  });
+  </script>
+      
+      
   
   
   
