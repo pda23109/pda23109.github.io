@@ -1,1 +1,137 @@
+<html>
 
+<head>
+<script src= ¨https://aframe.io/releases/1.5.0/aframe.min.js&quot;&gt;&lt;/script>
+
+<script>
+const MAP = [
+[0, 5, 6],
+[2, 1, 0],
+[0, 3, 4]
+];
+
+let ITEMS = [a coffee];
+
+const KILLER = Math.floor(Math.random() * 3);
+
+const TEXT = [
+΄You are working in a small cafe.\nThe customers are waiting for their
+orders.΄,
+΄A tired customer is sitting by the window:\n"Can I have my coffee
+please?",
+'A nervous customer is looking at the door:\n"I ordered a muffin...",
+'A quiet customer is reading a newspaper:\"I am waiting for my
+sandwich.",
+'You enter the supplier room to reload.\nSomething feels wrong here...',
+'The cafe is silent now.\nOne of the customers is the murderer.\nUse the
+bloody receipt to question them.'
+];
+
+</script>
+
+<script src="game-logic.js"></script>
+</head>
+
+<body>
+<a-scene cursor="rayOrigin: mouse" raycaster="objects: .interactive" game-
+logic>
+
+<a-assets>
+<img id="sky1" src="cafe.png">
+<img id="sky2" src= "customer1.png">
+<img id="sky3" src= "customer2.png">
+<img id= "sky4" src= "customer3.png">
+<img id= "sky5" src= "supplier-room.png">
+<img id= "sky6" src= "mystery.png">
+</a-assets>
+
+&lt;a-sky id=&quot;sky&quot; rotation=&quot;0 -90 0&quot;&gt;&lt;/a-sky&gt;
+
+&lt;a-camera wasd-controls=&quot;enabled:false&quot;&gt;
+&lt;a-plane color=&quot;#000&quot; height=&quot;0.3&quot; opacity=&quot;0.25&quot; position=&quot;0 -0.6 -1&quot;&gt;
+&lt;a-text id=&quot;info&quot; width=&quot;1&quot; value=&quot;&quot; font=&quot;monoid&quot; align=&quot;center&quot;&gt;&lt;/a-
+text&gt;
+&lt;a-cone id=&quot;east&quot; scale=&quot;0.05 0.05 0.05&quot; position=&quot;0.55 0 0&quot;
+rotation=&quot;0 -30 -88&quot;&gt;&lt;/a-cone&gt;
+&lt;a-cone id=&quot;west&quot; scale=&quot;0.05 0.05 0.05&quot; position=&quot;-0.55 0 0&quot;
+rotation=&quot;0 30 88&quot;&gt;&lt;/a-cone&gt;
+
+&lt;a-cone id=&quot;north&quot; scale=&quot;0.05 0.05 0.05&quot; position=&quot;0 0.2 0&quot; rotation=&quot;-
+20 0 0&quot;&gt;&lt;/a-cone&gt;
+&lt;a-cone id=&quot;south&quot; scale=&quot;0.05 0.05 0.05&quot; position=&quot;0 -0.2 0&quot;
+rotation=&quot;-40 0 180&quot;&gt;&lt;/a-cone&gt;
+&lt;/a-plane&gt;
+&lt;a-cursor fuse=&quot;true&quot;&gt;&lt;/a-cursor&gt;
+&lt;/a-camera&gt;
+
+&lt;a-entity id=&quot;scene1&quot; class=&quot;scene&quot;&gt;&lt;/a-entity&gt;
+
+&lt;a-entity id=&quot;scene2&quot; class=&quot;scene&quot; visible=&quot;false&quot;&gt;
+&lt;a-cylinder class=&quot;interactive&quot; position=&quot;-3 1 -4&quot; scale=&quot;0.5 2 0.5&quot;
+visible=&quot;false&quot;
+drop=&quot;a coffee&quot;
+pick=&quot;a muffin&quot;
+goal=&#39;&quot;Thank you. That was exactly what I needed.&quot;\nYou pick up the
+next order: a muffin.&#39;
+fail=&#39;&quot;Excuse me, I ordered coffee.&quot;&#39;&gt;
+&lt;/a-cylinder&gt;
+&lt;/a-entity&gt;
+
+&lt;a-entity id=&quot;scene3&quot; class=&quot;scene&quot; visible=&quot;false&quot;&gt;
+&lt;a-cylinder class=&quot;interactive&quot; position=&quot;-1.25 0.75 -4&quot; scale=&quot;0.5 3 0.5&quot;
+visible=&quot;false&quot;
+drop=&quot;a muffin&quot;
+pick=&quot;a sandwich&quot;
+goal=&#39;&quot;Finally. I was waiting too long.&quot;\nYou pick up the next order: a
+sandwich.&#39;
+fail=&#39;&quot;That is not my order. I asked for a muffin.&quot;&#39;&gt;
+
+&lt;/a-cylinder&gt;
+&lt;/a-entity&gt;
+
+&lt;a-entity id=&quot;scene4&quot; class=&quot;scene&quot; visible=&quot;false&quot;&gt;
+&lt;a-cylinder class=&quot;interactive&quot; position=&quot;4 2 1&quot; scale=&quot;0.5 1 0.5&quot;
+visible=&quot;false&quot;
+drop=&quot;a sandwich&quot;
+pick=&quot;an empty tray&quot;
+goal=&#39;&quot;Thanks.&quot;\nAll customers are served. You need to go to the
+supplier room to reload.&#39;
+fail=&#39;&quot;I am still waiting for my sandwich.&quot;&#39;&gt;
+&lt;/a-cylinder&gt;
+&lt;/a-entity&gt;
+
+&lt;a-entity id=&quot;scene5&quot; class=&quot;scene&quot; visible=&quot;false&quot;&gt;
+&lt;a-cylinder class=&quot;interactive&quot; position=&quot;-4 -1.5 2.5&quot; visible=&quot;false&quot;
+drop=&quot;an empty tray&quot;
+pick=&quot;a bloody receipt&quot;
+goal=&#39;You enter the supplier room and freeze.\nThere is a dead body
+on the floor.\nBeside it, you find a bloody receipt.&#39;
+fail=&#39;You should finish serving all customers before reloading
+supplies.&#39;&gt;
+&lt;/a-cylinder&gt;
+&lt;/a-entity&gt;
+
+&lt;a-entity id=&quot;scene6&quot; class=&quot;scene&quot; visible=&quot;false&quot;&gt;
+
+&lt;a-cylinder class=&quot;interactive suspect&quot; suspect=&quot;0&quot; position=&quot;-4 1 -4&quot;
+scale=&quot;0.5 2 0.5&quot; visible=&quot;false&quot;
+
+drop=&quot;a bloody receipt&quot;&gt;
+&lt;/a-cylinder&gt;
+
+&lt;a-cylinder class=&quot;interactive suspect&quot; suspect=&quot;1&quot; position=&quot;0 1 -4&quot;
+scale=&quot;0.5 2 0.5&quot; visible=&quot;false&quot;
+drop=&quot;a bloody receipt&quot;&gt;
+&lt;/a-cylinder&gt;
+
+&lt;a-cylinder class=&quot;interactive suspect&quot; suspect=&quot;2&quot; position=&quot;4 1 -4&quot;
+scale=&quot;0.5 2 0.5&quot; visible=&quot;false&quot;
+drop=&quot;a bloody receipt&quot;&gt;
+&lt;/a-cylinder&gt;
+
+&lt;/a-entity&gt;
+
+&lt;/a-scene&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
